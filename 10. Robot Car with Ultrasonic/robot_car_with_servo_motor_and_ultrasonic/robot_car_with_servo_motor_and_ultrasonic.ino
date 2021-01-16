@@ -10,6 +10,8 @@ Servo myservo;
 #define in2 9
 #define in3 10
 #define in4 11
+#define speed1 150                            // motor normal speed
+#define speed2 100                            // motor turning speed
 
 // ultrasonic
 #define trigger 12                            // sends HIGH signal and measure the time by echo lens
@@ -28,9 +30,7 @@ void setup() {
   pinMode(in2, OUTPUT);
   pinMode(in3, OUTPUT);
   pinMode(in4, OUTPUT);
-  analogWrite(en_a, 255);
-  analogWrite(en_b, 255);
-
+  
   pinMode(trigger, OUTPUT);
   pinMode(echo, INPUT);
 }
@@ -82,6 +82,9 @@ int ultrasonic() {
 
 // the 2 motors move forward
 void moveF() {
+  analogWrite(en_a, speed1);
+  analogWrite(en_b, speed1);
+  
   digitalWrite(in1, HIGH);
   digitalWrite(in2, LOW);
   digitalWrite(in3, HIGH);
@@ -91,6 +94,9 @@ void moveF() {
 
 // the 2 motors move backward
 void moveB() {
+  analogWrite(en_a, speed1);
+  analogWrite(en_b, speed1);
+  
   digitalWrite(in1, LOW);
   digitalWrite(in2, HIGH);
   digitalWrite(in3, LOW);
@@ -100,26 +106,33 @@ void moveB() {
 
 // the right motor move forward and the left motor moves backward
 void turnR() {
-  analogWrite(en_a, 255);
-  analogWrite(en_b, 255);
+  analogWrite(en_a, speed2);
+  analogWrite(en_b, speed2);
+  
   digitalWrite(in1, HIGH);
   digitalWrite(in2, LOW);
   digitalWrite(in3, LOW);
   digitalWrite(in4, HIGH);
-  delay(500);
+  delay(1000);
 }
 
 // the right motor move backward and the left motor moves forward
 void turnL() {
+  analogWrite(en_a, speed2);
+  analogWrite(en_b, speed2);
+
   digitalWrite(in1, LOW);
   digitalWrite(in2, HIGH);
   digitalWrite(in3, HIGH);
   digitalWrite(in4, LOW);
-  delay(500);
+  delay(1000);
 }
 
 // turns off the 2 motors
 void off() {
+  analogWrite(en_a, 0);
+  analogWrite(en_b, 0);
+
   digitalWrite(in1, LOW);
   digitalWrite(in2, LOW);
   digitalWrite(in3, LOW);

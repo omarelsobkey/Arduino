@@ -664,4 +664,3 @@ uint8_t AF_Stepper::onestep(uint8_t dir, uint8_t style) {
   MC.latch_tx();
   return currentstep;
 }
-

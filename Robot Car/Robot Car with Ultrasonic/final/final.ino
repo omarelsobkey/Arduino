@@ -1,3 +1,9 @@
+/********************************************************************
+  Engineer : Omar Elsobkey
+  Version  : 1.0
+  Date     : 16/1/2021
+********************************************************************/
+
 // servo motor
 #include <Servo.h>
 Servo myservo;
@@ -10,8 +16,10 @@ Servo myservo;
 #define in2 9
 #define in3 10
 #define in4 11
-#define speed1 150                            // motor normal speed
-#define speed2 100                            // motor turning speed
+#define speed1 120                            // motor normal speed
+#define speed2 120                            // motor turning speed
+
+#define delay_time 500                       // turning time
 
 // ultrasonic
 #define trigger 12                            // sends HIGH signal and measure the time by echo lens
@@ -30,7 +38,7 @@ void setup() {
   pinMode(in2, OUTPUT);
   pinMode(in3, OUTPUT);
   pinMode(in4, OUTPUT);
-  
+
   pinMode(trigger, OUTPUT);
   pinMode(echo, INPUT);
 }
@@ -54,7 +62,7 @@ void loop() {
     leftDistance = ultrasonic();          // get left distance
     myservo.write(90);                 // return to center pos
     delay(300);
-    
+
     if (rightDistance > 30 || leftDistance > 30) {
       if (rightDistance >= leftDistance) turnR();
       else turnL();
@@ -84,36 +92,35 @@ int ultrasonic() {
 void moveF() {
   analogWrite(en_a, speed1);
   analogWrite(en_b, speed1);
-  
+
   digitalWrite(in1, HIGH);
   digitalWrite(in2, LOW);
   digitalWrite(in3, HIGH);
   digitalWrite(in4, LOW);
-  delay(500);
 }
 
 // the 2 motors move backward
 void moveB() {
   analogWrite(en_a, speed1);
   analogWrite(en_b, speed1);
-  
+
   digitalWrite(in1, LOW);
   digitalWrite(in2, HIGH);
   digitalWrite(in3, LOW);
   digitalWrite(in4, HIGH);
-  delay(500);
+  delay(250);
 }
 
 // the right motor move forward and the left motor moves backward
 void turnR() {
   analogWrite(en_a, speed2);
   analogWrite(en_b, speed2);
-  
+
   digitalWrite(in1, HIGH);
   digitalWrite(in2, LOW);
   digitalWrite(in3, LOW);
   digitalWrite(in4, HIGH);
-  delay(1000);
+  delay(delay_time);
 }
 
 // the right motor move backward and the left motor moves forward
@@ -125,7 +132,7 @@ void turnL() {
   digitalWrite(in2, HIGH);
   digitalWrite(in3, HIGH);
   digitalWrite(in4, LOW);
-  delay(1000);
+  delay(delay_time);
 }
 
 // turns off the 2 motors

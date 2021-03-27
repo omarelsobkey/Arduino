@@ -1,3 +1,9 @@
+/********************************************************************
+Engineer : Omar Elsobkey
+Version  : 1.0
+Date     : 12/1/2021
+********************************************************************/
+
 // motor shield
 #include "AFMotor.h"
 #define motorTurningSpeed 65

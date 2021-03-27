@@ -21,7 +21,7 @@ void loop() {
   delayMicroseconds(10);
   digitalWrite(trigger, LOW);
   duration = pulseIn(echo, HIGH);  // returns duration in microseconds
-  distance = duration * 0.034 / 2; // ( duration * 10^-3 ) * speed of waves (340m/s) / 2
+  distance = duration * 0.034 / 2; // ( duration * 10^-6 ) * speed of waves (34000 cm/s) / 2
                                    // 2 is (half of the time that wave traveled from trigger to obstacle then again to echo)
   Serial.println(distance);
 }

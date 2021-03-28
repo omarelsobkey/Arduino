@@ -1,12 +1,17 @@
 /********************************************************************
-Engineer : Omar Elsobkey
-Version  : 1.0
-Date     : 3/3/2021
+  Engineer : Omar Elsobkey
+  Version  : 2.0
+  Date     : 28/3/2021
 ********************************************************************/
+// now it works with 2 7segments
 
-#define DATA_PIN 0
-#define LATCH_PIN 7
-#define CLOCK_PIN 8
+#define L_DATA_PIN 2
+#define L_LATCH_PIN 3
+#define L_CLOCK_PIN 4
+
+#define R_DATA_PIN 5
+#define R_LATCH_PIN 6
+#define R_CLOCK_PIN 7
 
 byte numbers[] = {B11111100,  //0
                   B01100000,  //1
@@ -17,19 +22,35 @@ byte numbers[] = {B11111100,  //0
                   B10111110,  //6
                   B11100000,  //7
                   B11111110,  //8
-                  B11110110}; //9
+                  B11110110
+                 }; //9
 
 void setup() {
-  pinMode(DATA_PIN, OUTPUT);
-  pinMode(LATCH_PIN, OUTPUT);
-  pinMode(CLOCK_PIN, OUTPUT);
+  pinMode(L_DATA_PIN, OUTPUT);
+  pinMode(L_LATCH_PIN, OUTPUT);
+  pinMode(L_CLOCK_PIN, OUTPUT);
+
+  pinMode(R_DATA_PIN, OUTPUT);
+  pinMode(R_LATCH_PIN, OUTPUT);
+  pinMode(R_CLOCK_PIN, OUTPUT);
 }
 
 void loop() {
-  for (int i = 0; i < sizeof(numbers); i++) {
-    digitalWrite(LATCH_PIN, LOW);
-    shiftOut(DATA_PIN, CLOCK_PIN, LSBFIRST, numbers[i]);
-    digitalWrite(LATCH_PIN, HIGH);
-    delay(1000);
+  for (int i = 0; i < 100; i++) {
+    display_number(i);
+    delay(300);
   }
+}
+
+void display_number(byte n) {
+  byte left, right;
+  right = n % 10;
+  left = n / 10;
+  digitalWrite(L_LATCH_PIN, LOW);
+  digitalWrite(R_LATCH_PIN, LOW);
+  shiftOut(L_DATA_PIN, L_CLOCK_PIN, LSBFIRST, numbers[left]);
+  shiftOut(R_DATA_PIN, R_CLOCK_PIN, LSBFIRST, numbers[right]);
+  digitalWrite(L_LATCH_PIN, HIGH);
+  digitalWrite(R_LATCH_PIN, HIGH);
+
 }

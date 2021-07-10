@@ -1,2 +1,2 @@
 # Arduino
-Projects' codes done using arduino
+Practise projects' done using arduino
